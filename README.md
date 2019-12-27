@@ -41,3 +41,10 @@ Task_Queue(daemon=None)
 - add_task(new_task) : Adds a new task obj, if there is no threads running will start one
 - get_current_task() : Allows for the current task that is executing to be returned
 - tasks_left() : Returns the number of tasks left to be completed, includes currently executing task if any.
+- add_from_func(callback, task_name) : used as a decorator which acts as add_task()
+
+## Updates:
+### 1.1
+- New decorator method that allows for adding to a Task_Queue obj
+### 1.0
+First version

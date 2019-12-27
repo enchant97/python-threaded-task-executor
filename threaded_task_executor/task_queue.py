@@ -16,6 +16,7 @@ class Task_Queue:
         daemon : used in threading.Thread
     """
     def __init__(self, daemon=None):
+        #TODO: allow a 'global' callback variable to be given
         self.__tasks = _Queue_Peek()
         self.__daemon = daemon
 
@@ -57,3 +58,16 @@ class Task_Queue:
                 self.__tasks.push(new_task)
         else:
             raise TypeError("Must be a Task class instance")
+
+    def add_from_func(self, callback=None, task_name=""):
+        """
+        Decorator to add a function which will use add_task()
+        args:
+            callback : used for Task()
+            task_name : used for Task()
+        """
+        def decorator(func):
+            def wrapper(*args, **kw):
+                self.add_task(_Task(func, callback, task_name, args, kw))
+            return wrapper
+        return decorator
