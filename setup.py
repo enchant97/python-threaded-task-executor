@@ -10,6 +10,7 @@ setup(name='threaded-task-executor',
         python_requires='>=3.5',
         description='Spawn a thread that executes tasks in order',
         long_description=readme(),
+        long_description_content_type="text/markdown",
         classifiers=[
             'Development Status :: 5 - Production/Stable',
             'License :: OSI Approved :: MIT License',
