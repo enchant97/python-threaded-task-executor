@@ -1,5 +1,6 @@
 from collections import deque as _deque
 class Queue_Peek:
+    #TODO: inherit from Queue instead to implement 'peek'
     """
     Queue that has a 'peek' function
     """

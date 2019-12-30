@@ -10,7 +10,7 @@ class Task:
 
     args:
         func : the function that will be executes
-        callback : function that will run when processing has started and finished, callback("STARTED", "taskname")
+        callback : function that will run when processing has started and finished, callback("STARTED", "taskname"), if None will not run any
         task_name : the name of the task which will be used in the callback
         args : any arguments that will be passed in the function
         kwargs : any kwargs that will be passed in the function
@@ -22,11 +22,22 @@ class Task:
         self.__args = args
         self.__kwargs = kwargs
 
+    @property
+    def callback(self):
+        return self.__callback
+
+    @callback.setter
+    def callback(self, newcallback):
+        if callable(newcallback) or newcallback == None:
+            self.__callback = newcallback
+        else:
+            raise TypeError("new callback value must be callable or None")
+
     def execute(self):
         """
         Executes the task
         """
-        if self.__callback:
+        if callable(self.__callback):
             self.__callback("STARTED", self.__task_name)
             self.__func(*self.__args, **self.__kwargs)
             self.__callback("FINISHED", self.__task_name)

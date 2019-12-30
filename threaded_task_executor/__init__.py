@@ -9,5 +9,5 @@ from .task import Task
 from .queue_peek import Queue_Peek
 
 __all__ = ["Task_Queue", "Task", "Queue_Peek"]
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "enchant97"

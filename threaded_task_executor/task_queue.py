@@ -14,11 +14,12 @@ class Task_Queue:
 
     args:
         daemon : used in threading.Thread
+        global_callback : used when there is no callback given when adding a task (can be None)
     """
-    def __init__(self, daemon=None):
-        #TODO: allow a 'global' callback variable to be given
+    def __init__(self, daemon=None, global_callback=None):
         self.__tasks = _Queue_Peek()
         self.__daemon = daemon
+        self.__global_callback = global_callback
 
     def __execute_tasks(self):
         """
@@ -47,9 +48,15 @@ class Task_Queue:
     def add_task(self, new_task):
         """
         Adds a new task, if there is no
-        threads running will start one
+        threads running will start one,
+        if no callback was given it will use global_callback if it was set
+        , unless a int 0 was provided which means no use of global callback
         """
         if isinstance(new_task, _Task):
+            if new_task.callback == None:
+                new_task.callback = self.__global_callback
+            elif new_task.callback == 0:
+                new_task.callback = None
             if self.__tasks.empty():
                 self.__tasks.push(new_task)
                 the_thread = _Thread(target=self.__execute_tasks, daemon=self.__daemon)
